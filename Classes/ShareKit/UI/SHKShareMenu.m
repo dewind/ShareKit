@@ -263,6 +263,10 @@
 	
 	else 
 	{
+#if NS_BLOCKS_AVAILABLE
+    [item executeContextBlock: [rowData objectForKey:@"className"]];
+#endif
+    
 		[NSClassFromString([rowData objectForKey:@"className"]) shareItem:item];
 		
 		[[SHK currentHelper] hideCurrentViewControllerAnimated:YES];

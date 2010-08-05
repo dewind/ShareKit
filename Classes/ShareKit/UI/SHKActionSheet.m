@@ -85,6 +85,9 @@
 	// Sharers
 	if (buttonIndex >= 0 && buttonIndex < sharers.count)
 	{
+#if NS_BLOCKS_AVAILABLE
+    [item executeContextBlock: [sharers objectAtIndex:buttonIndex]];
+#endif
 		[NSClassFromString([sharers objectAtIndex:buttonIndex]) performSelector:@selector(shareItem:) withObject:item];
 	}
 	

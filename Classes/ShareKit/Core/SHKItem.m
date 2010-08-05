@@ -39,6 +39,9 @@
 @synthesize shareType;
 @synthesize URL, image, title, text, tags, data, mimeType, filename;
 @synthesize custom;
+#if NS_BLOCKS_AVAILABLE
+@synthesize contextBlock = _contextBlock;
+#endif
 
 - (void)dealloc
 {
@@ -56,6 +59,10 @@
 	
 	[custom release];
 	
+#if NS_BLOCKS_AVAILABLE
+  [_contextBlock release];
+#endif
+  
 	[super dealloc];
 }
 
@@ -134,6 +141,14 @@
 {
 	return [[custom objectForKey:key] isEqualToString:SHKFormFieldSwitchOn];
 }
+
+#if NS_BLOCKS_AVAILABLE
+- (void)executeContextBlock:(NSString *)selectedSharer {
+  if (self.contextBlock) {
+    self.contextBlock(selectedSharer, self);
+  }
+}
+#endif
 
 
 #pragma mark -

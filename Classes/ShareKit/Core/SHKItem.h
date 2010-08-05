@@ -55,6 +55,10 @@ typedef enum
 	
 	@private
 		NSMutableDictionary *custom;
+#if NS_BLOCKS_AVAILABLE
+  void (^_contextBlock)(NSString *selectedSharer, id theItem);
+#endif
+
 }
 
 @property (nonatomic)			SHKShareType shareType;
@@ -79,6 +83,11 @@ typedef enum
 - (void)setCustomValue:(NSString *)value forKey:(NSString *)key;
 - (NSString *)customValueForKey:(NSString *)key;
 - (BOOL)customBoolForSwitchKey:(NSString *)key;
+
+#if NS_BLOCKS_AVAILABLE
+@property (nonatomic, copy) void (^contextBlock)(NSString *selectedSharer, id theItem);
+- (void)executeContextBlock:(NSString *)selectedSharer;
+#endif
 
 - (NSDictionary *)dictionaryRepresentation;
 + (SHKItem *)itemFromDictionary:(NSDictionary *)dictionary;
