@@ -79,6 +79,9 @@ typedef enum
 + (SHKItem *)image:(UIImage *)image title:(NSString *)title;
 + (SHKItem *)text:(NSString *)text;
 + (SHKItem *)file:(NSData *)data filename:(NSString *)filename mimeType:(NSString *)mimeType title:(NSString *)title;
+#if NS_BLOCKS_AVAILABLE
++ (SHKItem *)context:(void (^)(NSString *, id))contextBlock;
+#endif
 
 - (void)setCustomValue:(NSString *)value forKey:(NSString *)key;
 - (NSString *)customValueForKey:(NSString *)key;

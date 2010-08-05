@@ -118,6 +118,15 @@
 	return [item autorelease];
 }
 
+#if NS_BLOCKS_AVAILABLE
++ (SHKItem *)context:(void (^)(NSString *, id))contextBlock {
+	SHKItem *item = [[SHKItem alloc] init];
+	item.shareType = SHKShareTypeText;
+	item.contextBlock = contextBlock;
+  return [item autorelease];
+}
+#endif
+
 #pragma mark -
 
 - (void)setCustomValue:(NSString *)value forKey:(NSString *)key
