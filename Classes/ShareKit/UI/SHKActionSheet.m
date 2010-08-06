@@ -45,24 +45,31 @@
 + (SHKActionSheet *)actionSheetForType:(SHKShareType)type
 {
 	SHKActionSheet *as = [[SHKActionSheet alloc] initWithTitle:SHKLocalizedString(@"Share")
-													  delegate:self
-											 cancelButtonTitle:nil
-										destructiveButtonTitle:nil
-											 otherButtonTitles:nil];
+                                                    delegate:self
+                                           cancelButtonTitle:nil
+                                      destructiveButtonTitle:nil
+                                           otherButtonTitles:nil];
 	as.item = [[[SHKItem alloc] init] autorelease];
 	as.item.shareType = type;
 	
 	as.sharers = [SHK favoriteSharersForType:type];
-	
+  NSMutableArray *availableSharers = [NSMutableArray arrayWithArray:as.sharers];
+  
 	// Add buttons for each favoriate sharer
 	id class;
 	for(NSString *sharerId in as.sharers)
 	{
 		class = NSClassFromString(sharerId);
-		if ([class canShare])
-			[as addButtonWithTitle: [class sharerTitle] ];
+		if ([class canShare]) {
+			[as addButtonWithTitle: [class sharerTitle] ];      
+    } else {
+      [availableSharers removeObject:sharerId];
+    }
+    
 	}
 	
+  as.sharers = availableSharers;
+  
 	// Add More button
 	[as addButtonWithTitle:SHKLocalizedString(@"More...")];
 	
